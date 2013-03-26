@@ -31,10 +31,10 @@ function spec_out = specgram(ts,fft_size,overlap, ii_plot)
     
     if(ii_plot)
         fs = 44100; %assumed
-        fax = linspace(0,44100);
+        fax = linspace(0,44100,fft_size)/1000;
         tax = (starts(:,1) + fft_size/2)/fs;
         ii_take = 2:ceil(fft_size/2);
-        figure();imagesc(fax,tax,20*log10(abs(spec_out(:,ii_take))));
+        figure();imagesc(fax(ii_take),tax,20*log10(abs(spec_out(:,ii_take))));
         xlabel('Frequency - Hz');
         ylabel('Time - Seconds');
     end
