@@ -6,6 +6,9 @@ else
     WFM = input_wfm;
 end
 
+tmp_data(1,:) = WFM.data;
+WFM.data = tmp_data;
+
 if(~isfield(WFM,'fs'))
     WFM.fs = 44100; % assume...
 end
