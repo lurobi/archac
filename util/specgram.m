@@ -1,7 +1,8 @@
-function spec_out = specgram(ts,fft_size,overlap, ii_plot)
-    if nargin<4
-        ii_plot=0;
-    end
+function spec_out = specgram(ts,fft_size,overlap,ii_plot,wname)
+    if nargin<4, ii_plot=0; end
+    if nargin<5, wname = 'none'; end
+    
+    if isempty(wname), wname = 'none'; end
     
     WFM = standardize_wfm(ts);
 
@@ -16,6 +17,8 @@ function spec_out = specgram(ts,fft_size,overlap, ii_plot)
     nsamp_new = fft_size - nsamp_overlap;
     
     nffts = 1+ceil((WFM.nsamp-fft_size)/nsamp_new);
+    % pad the end of the time series with zeros so we have an integer
+    % number of ffts to run.
     ts_pad = zeros(1,fft_size+(nffts-1)*nsamp_new);
     ts_pad(1:WFM.nsamp) = WFM.data;
     
@@ -27,6 +30,16 @@ function spec_out = specgram(ts,fft_size,overlap, ii_plot)
     indexes = indexes+starts;
     
     blocked = ts_pad(indexes);
+    if ~strcmp(wname,'none')
+        switch(wname)
+            case 'hamming'
+                window = hamming(fft_size,'periodic')';
+            otherwise
+                error('unrecognized window name!');
+        end
+        window = repmat(window,[nffts,1]);
+        blocked = blocked .* window;
+    end
     spec_out = fft(blocked,fft_size,2);
     
     
