@@ -26,4 +26,7 @@ function REC = play_and_record(input_data,ntimes,spacing)
     REC.nsamp = length(REC.data);
     REC.fs   = WFM.fs;
     REC.time_ax = linspace(0,REC.nsamp/REC.fs,REC.nsamp);
+    
+    repcor(WFM,REC);
+    specgram(REC,1024,0.25,1);
 end
