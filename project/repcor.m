@@ -14,6 +14,6 @@ function repout = repcor(WFM,REC)
     time_ax = 0:(1/REC.fs):REC.duration-1/REC.fs;
     [~,peak_ind] = max(dB10(repout));
     time_ax = time_ax - time_ax(peak_ind);
-    figure();plot(time_ax,dB10(repout));
+    figure();plot(time_ax,dB20(repout));
     
 end
