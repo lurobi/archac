@@ -57,8 +57,19 @@ function REC = play_and_record(input_data,ntimes,spacing)
     REC.fs   = WFM.fs;
     REC.time_ax = linspace(0,REC.nsamp/REC.fs,REC.nsamp);
     
+    nclip = numel(find(REC.data>.999));
+    maxdata = max(abs(REC.data));
+    if(nclip>0)
+        fprintf('Warning, recording clipped %d samples!\n',nclip);
+    elseif(maxdata<0.5)
+        fprintf('Gain could be increased: max level=%.3f\n',maxdata);
+    else
+        fprintf('Recording good, max level=%.3f\n',maxdata);
+    end
+    
     repcor(WFM,REC);
-    specgram(REC,1024,0.25,1);
+    specgram(REC,512,0.25,1,'hamming');
+    specgram(REC,4096,0.25,1,'hamming');
     
     REC.WFM = WFM;
     REC.spacing = spacing;
