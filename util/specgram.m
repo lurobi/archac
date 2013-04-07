@@ -1,6 +1,10 @@
 function SPECGRAM = specgram(ts,fft_size,overlap,ii_plot,window)
-    if nargin<4, ii_plot=0; end
-    if nargin<5, window = []; end
+    if (nargin==1)
+        fft_size=2048; overlap=0.5; ii_plot=1; window='hamming';
+    else
+        if nargin<4, ii_plot=0; end
+        if nargin<5, window = []; end
+    end
     
     WFM = standardize_wfm(ts);
 

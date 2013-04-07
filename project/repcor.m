@@ -1,4 +1,5 @@
-function repout = repcor(WFM,REC)
+function repout = repcor(WFM,REC,ii_plot)
+    if(nargin<3) ii_plot=1; end
 
     WFM = standardize_wfm(WFM);
     REC = standardize_wfm(REC);
@@ -11,9 +12,11 @@ function repout = repcor(WFM,REC)
     rec_spec = fft(REC.data,samps_needed);
     repout = ifft(rec_spec.*conj(wfm_spec),samps_needed);
     repout = repout(1:samps_good);
-    time_ax = 0:(1/REC.fs):REC.duration-1/REC.fs;
-    [~,peak_ind] = max(dB10(repout));
-    time_ax = time_ax - time_ax(peak_ind);
-    figure();plot(time_ax,dB20(repout));
+    if(ii_plot)
+        time_ax = 0:(1/REC.fs):REC.duration-1/REC.fs;
+        [~,peak_ind] = max(dB10(repout));
+        time_ax = time_ax - time_ax(peak_ind);
+        figure();plot(time_ax,dB20(repout));
+    end
     
 end
