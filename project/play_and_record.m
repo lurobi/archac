@@ -50,7 +50,7 @@ function REC = play_and_record(input_data,ntimes,spacing)
     record(r);
     pause(2);
     playblocking(p);
-    pause(5);
+    pause(8);
     stop(r);
     REC.data = getaudiodata(r);
     REC.nsamp = length(REC.data);

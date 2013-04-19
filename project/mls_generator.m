@@ -14,6 +14,8 @@ function out = mls_generator(order)
         switch(order)
             case 4
                 a(jj,end) = a(jj-1,2) + a(jj-1,1);
+            case 9
+                a(jj,end) = a(jj-1,5) + a(jj-1,1);
             case 20
                 a(jj,end) = a(jj-1,4) + a(jj-1,1);
             
