@@ -1,7 +1,8 @@
 function [reshaped_data,indexes] = gen_overlap_windows(data,window_size,ovl)
+% function [reshaped_data,indexes] = gen_overlap_windows(data,window_size,ovl)
 
     nsamp = numel(data);
-    
+    window_size = round(window_size);
     if(ovl<=1)
         nsamp_overlap = round(window_size*ovl);
     else
