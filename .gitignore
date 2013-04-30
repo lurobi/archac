@@ -165,3 +165,5 @@ pip-log.txt
 # MATLAB
 *.asv
 *.mat
+*.pdf
+*.wav
