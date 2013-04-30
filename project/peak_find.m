@@ -1,12 +1,14 @@
 function [jpeaks,jvalleys,heights,spans] = peak_find(data)
 % function [jpeaks,jvalleys,heights,spans] = peak_find(data)
 
+data(~isfinite(data)) = -100;
+
 npt = length(data);
 greater_than_left = data(2:npt-1) > data(1:npt-2);
-greater_than_right = data(2:npt-1) > data(3:npt);
+greater_than_right = data(2:npt-1) >= data(3:npt);
 jpeaks = 1+find(greater_than_left & greater_than_right);
 
-less_than_left = data(2:npt-1) < data(1:npt-2);
+less_than_left = data(2:npt-1) <= data(1:npt-2);
 less_than_right = data(2:npt-1) < data(3:npt);
 jvalleys = 1+find(less_than_left & less_than_right);
 if(jpeaks(1)<jvalleys(1))
@@ -19,7 +21,7 @@ if(jpeaks(end)>jvalleys(end))
     jvalleys = [ jvalleys new_valley];
 end
 
-if(numel(jpeaks)+1 ~= numel(jvalleys))
+if(numel(jpeaks)+1 ~= numel(jvalleys) && ~isempty(jpeaks))
     error('Need one more valley than peaks!')
 end
 

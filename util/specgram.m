@@ -38,7 +38,10 @@ function SPECGRAM = specgram(ts,fft_size,overlap,ii_plot,window)
         ii_take = 2:ceil(SPECGRAM.fft_size/2);
         tax = SPECGRAM.scales{1};
         fax = SPECGRAM.scales{2}(ii_take);
-        figure();imagesc(fax,tax,dB20(abs(SPECGRAM.data(:,ii_take))));
+        dbdata = dB10(SPECGRAM.data(:,ii_take).^2);
+        figure();imagesc(fax,tax,dbdata);
+        clim = [-100 0] + max(dbdata(:));
+        set(gca,'Clim',clim);
         xlabel(SPECGRAM.labels{2});
         ylabel(SPECGRAM.labels{1});
     end
