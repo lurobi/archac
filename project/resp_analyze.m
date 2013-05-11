@@ -3,6 +3,10 @@ function resp_analyze(REC,fig)
     if ii_new_fig, figure(); else figure(fig); end
     
     time_ax = REC.time_ax - REC.time_ax(1);
+    if ~isfield(REC,'name')
+        REC.name = 'UNK';
+        REC.room = 'UNK';
+    end
 
     if any(REC.WFM.data>0)
         resp_raw = real(repcor(REC,REC.WFM,0));

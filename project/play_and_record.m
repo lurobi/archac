@@ -45,6 +45,9 @@ function REC = play_and_record(input_data,ntimes,spacing)
         end
     end
     
+    gain = 0.5;
+    wfm_padded = wfm_padded.*gain;
+    
     p = audioplayer(wfm_padded,WFM.fs);
     r = audiorecorder(WFM.fs,24,1);
     record(r);
