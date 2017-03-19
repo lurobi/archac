@@ -5,7 +5,7 @@ import datetime
 import math
 import matplotlib.pyplot as pyplot
 
-flist = glob.glob("C:/Users/luker/Downloads/report-*.csv")
+flist = glob.glob("data/report-*.csv")
 
 # Date,Time,System Setting,System Mode,Calendar Event,Program Mode,Cool Set Temp (F),
 # Heat Set Temp (F),Current Temp (F),Current Humidity (%RH),Outdoor Temp (F),
