@@ -19,13 +19,13 @@ ndays = 0
 saved_fields = ["Current Temp (F)", "Outdoor Temp (F)",
                 "Cool Stage 2 (sec)"]
 
-fine_time_dtype = [('indoor_temp', 'f4'),
-                   ('outdoor_temp', 'f4'),
-                   ('cooling_sec', 'f4'),
-                   ('heating_sec', 'f4'),
-                   ('day_dec', 'f4'),
-                   ('day_int', 'f4'),
-                   ('year', 'f4')]
+fine_time_dtype = [('indoor_temp', 'f8'),
+                   ('outdoor_temp', 'f8'),
+                   ('cooling_sec', 'f8'),
+                   ('heating_sec', 'f8'),
+                   ('day_dec', 'f8'),
+                   ('day_int', 'f8'),
+                   ('year', 'f8')]
 
 
 def float_or_NaN(sstr):
@@ -74,19 +74,21 @@ for fname in flist:
 
 mat_dhr_data = np.concatenate(row_list)
 mat_dhr = mat_dhr_data.view(np.recarray)
+print(mat_dhr_data)
+print(mat_dhr)
 
 # mat_dhr's data, viewed as a [ndays,nchar] matrix
-mat_dhr_data = mat_dhr_data.view('f').reshape( (-1,len(fine_time_dtype)) )
+mat_dhr_data = mat_dhr_data.view('f8').reshape( (-1,len(fine_time_dtype)) )
 
 pyplot.plot(mat_dhr.day_dec, mat_dhr.outdoor_temp)
 pyplot.plot(mat_dhr.day_dec, mat_dhr.indoor_temp)
 
 mat_dday_data = np.zeros(ndays + 1, dtype=fine_time_dtype)
 mat_dday = mat_dday_data.view(np.recarray)
-mat_dday_data = mat_dday_data.view('f').reshape( (-1,len(fine_time_dtype)) )
+mat_dday_data = mat_dday_data.view('f8').reshape( (-1,len(fine_time_dtype)) )
 
 day_accum = np.zeros(1, dtype=fine_time_dtype)
-day_accum_data = day_accum.view('f')
+day_accum_data = day_accum.view('f8')
 
 jDay = 0
 nday_accum = 0
@@ -111,7 +113,7 @@ for jHr in range(mat_dhr.shape[0]):
         dT_Hr = 24 * (mat_dhr[jHr].day_dec - mat_dhr[jHr-1].day_dec)
     iiok = np.isfinite(mat_dhr_data[jHr,:]).all()
     if not iiok: continue
-    day_accum_data += mat_dhr_data[jHr,:].view('f')
+    day_accum_data += mat_dhr_data[jHr,:].view('f8')
 
     nday_accum += 1
 
